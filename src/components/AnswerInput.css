@@ -1,0 +1,144 @@
+.answer-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.mic-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mic-button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #2196f3, #1976d2);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+}
+
+.mic-button:hover:not(:disabled) {
+  transform: scale(1.08);
+}
+
+.mic-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mic-button.mic-listening {
+  background: linear-gradient(135deg, #f44336, #d32f2f);
+  box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.mic-status {
+  font-size: 1.1rem;
+  color: #f44336;
+  font-weight: 700;
+  margin: 0;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.mic-transcript {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+  font-style: italic;
+}
+
+.divider-text {
+  font-size: 0.9rem;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.text-input-section {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.text-input {
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: inherit;
+  width: 100px;
+  text-align: center;
+  padding: 0.5rem;
+  border: 3px solid #ddd;
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.text-input:focus {
+  border-color: #2196f3;
+}
+
+.text-input::-webkit-inner-spin-button,
+.text-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.text-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.submit-button {
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #4caf50, #388e3c);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.submit-button:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.submit-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.replay-button {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  border: 2px solid #2196f3;
+  border-radius: 10px;
+  background: transparent;
+  color: #2196f3;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  margin-top: 0.5rem;
+}
+
+.replay-button:hover:not(:disabled) {
+  background: #2196f3;
+  color: white;
+}
+
+.replay-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
