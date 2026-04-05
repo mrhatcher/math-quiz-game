@@ -2,11 +2,12 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Question } from '../types/quiz';
 import { numberToSpoken } from '../utils/numberWords';
 
-function questionToText(q: Question): string {
+function questionToText(q: Question, playerName?: string): string {
   const a = numberToSpoken(q.a);
   const op = q.operator === '+' ? 'plus' : 'minus';
   const b = numberToSpoken(q.b);
-  return `What is ${a} ${op} ${b}?`;
+  const suffix = playerName ? `, ${playerName}` : '';
+  return `What is ${a} ${op} ${b}${suffix}?`;
 }
 
 export function useSpeakQuestion() {
@@ -28,7 +29,7 @@ export function useSpeakQuestion() {
     return () => synth.removeEventListener('voiceschanged', loadVoices);
   }, []);
 
-  const speak = useCallback((question: Question): Promise<void> => {
+  const speak = useCallback((question: Question, playerName?: string): Promise<void> => {
     return new Promise((resolve) => {
       const synth = window.speechSynthesis;
       if (!synth) { resolve(); return; }
@@ -36,7 +37,7 @@ export function useSpeakQuestion() {
       // Cancel any ongoing speech
       synth.cancel();
 
-      const text = questionToText(question);
+      const text = questionToText(question, playerName);
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.rate = 0.85;
       utterance.pitch = 1.1;

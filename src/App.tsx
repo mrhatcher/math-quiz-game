@@ -1,5 +1,6 @@
 import { useQuizEngine } from './hooks/useQuizEngine';
 import { StartScreen } from './components/StartScreen';
+import { NameEntry } from './components/NameEntry';
 import { QuestionCard } from './components/QuestionCard';
 import { AnswerInput } from './components/AnswerInput';
 import { FeedbackOverlay } from './components/FeedbackOverlay';
@@ -10,6 +11,7 @@ function App() {
   const {
     state,
     startQuiz,
+    confirmName,
     nextQuestion,
     replayQuestion,
     handleTypedAnswer,
@@ -26,7 +28,11 @@ function App() {
         <StartScreen onStart={startQuiz} ready={voicesReady} />
       )}
 
-      {phase !== 'start' && (
+      {phase === 'name' && (
+        <NameEntry onConfirm={confirmName} />
+      )}
+
+      {phase !== 'start' && phase !== 'name' && (
         <>
           <ScoreBar correct={correct} total={total} />
 

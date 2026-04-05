@@ -1,0 +1,123 @@
+.name-entry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  gap: 1.5rem;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.name-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #2196f3;
+  margin: 0;
+}
+
+.name-mic-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.name-mic-status {
+  font-size: 1.1rem;
+  color: #f44336;
+  font-weight: 700;
+  margin: 0;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.name-transcript {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+  font-style: italic;
+}
+
+.name-confirm-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  animation: slideInUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.name-heard {
+  font-size: 1.8rem;
+  color: #333;
+  margin: 0;
+}
+
+.name-heard strong {
+  color: #2196f3;
+}
+
+.name-confirm-prompt {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0;
+}
+
+.name-confirm-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.confirm-yes {
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #4caf50, #388e3c);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.confirm-yes:hover {
+  transform: scale(1.05);
+}
+
+.confirm-retry {
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 0.7rem 1.5rem;
+  border: 2px solid #ff9800;
+  border-radius: 50px;
+  background: transparent;
+  color: #ff9800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.confirm-retry:hover {
+  background: #ff9800;
+  color: white;
+}
+
+.name-text-section {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.name-text-input {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: inherit;
+  width: 200px;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  border: 3px solid #ddd;
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.name-text-input:focus {
+  border-color: #2196f3;
+}

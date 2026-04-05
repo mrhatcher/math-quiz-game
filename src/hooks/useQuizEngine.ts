@@ -11,16 +11,18 @@ const initialState: QuizState = {
   correct: 0,
   total: 0,
   lastAnswerCorrect: null,
+  playerName: '',
 };
 
 export function useQuizEngine() {
   const [state, setState] = useState<QuizState>(initialState);
   const { speak, speakText, isSpeaking, voicesReady } = useSpeakQuestion();
   const feedbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const playerNameRef = useRef('');
 
-  const askQuestion = useCallback(async (question: Question) => {
+  const askQuestion = useCallback(async (question: Question, playerName?: string) => {
     setState(prev => ({ ...prev, phase: 'asking', currentQuestion: question }));
-    await speak(question);
+    await speak(question, playerName);
     setState(prev => ({ ...prev, phase: 'listening' }));
   }, [speak]);
 
@@ -30,11 +32,15 @@ export function useQuizEngine() {
 
       const parsed = parseAnswer(rawText);
       const isCorrect = checkAnswer(parsed, prev.currentQuestion.correctAnswer);
+      const name = prev.playerName;
 
       if (isCorrect) {
-        speakText('Correct! Great job!');
+        speakText(name ? `Correct! Great job, ${name}!` : 'Correct! Great job!');
       } else {
-        speakText(`Not quite. The answer is ${prev.currentQuestion.correctAnswer}.`);
+        speakText(name
+          ? `Not quite, ${name}. The answer is ${prev.currentQuestion.correctAnswer}.`
+          : `Not quite. The answer is ${prev.currentQuestion.correctAnswer}.`
+        );
       }
 
       return {
@@ -54,8 +60,26 @@ export function useQuizEngine() {
   const recognition = useAnswerRecognition(handleAnswer);
 
   const startQuiz = useCallback(() => {
+    setState(prev => ({ ...prev, phase: 'name' }));
+  }, []);
+
+  const confirmName = useCallback(async (name: string) => {
+    playerNameRef.current = name;
+    setState(prev => ({ ...prev, playerName: name }));
+    await new Promise<void>((resolve) => {
+      const synth = window.speechSynthesis;
+      if (!synth) { resolve(); return; }
+      synth.cancel();
+      const utterance = new SpeechSynthesisUtterance(`Hi ${name}! Let's start!`);
+      utterance.rate = 0.9;
+      utterance.pitch = 1.1;
+      utterance.lang = 'en-US';
+      utterance.onend = () => resolve();
+      utterance.onerror = () => resolve();
+      synth.speak(utterance);
+    });
     const question = generateQuestion();
-    askQuestion(question);
+    askQuestion(question, name);
   }, [askQuestion]);
 
   const nextQuestion = useCallback(() => {
@@ -65,12 +89,12 @@ export function useQuizEngine() {
     }
     recognition.reset();
     const question = generateQuestion();
-    askQuestion(question);
+    askQuestion(question, playerNameRef.current);
   }, [askQuestion, recognition]);
 
   const replayQuestion = useCallback(() => {
     if (state.currentQuestion && state.phase === 'listening') {
-      speak(state.currentQuestion).then(() => {
+      speak(state.currentQuestion, playerNameRef.current).then(() => {
         setState(prev => ({ ...prev, phase: 'listening' }));
       });
       setState(prev => ({ ...prev, phase: 'asking' }));
@@ -80,6 +104,7 @@ export function useQuizEngine() {
   return {
     state,
     startQuiz,
+    confirmName,
     nextQuestion,
     replayQuestion,
     handleTypedAnswer,

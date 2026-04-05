@@ -1,6 +1,6 @@
 export type Operator = '+' | '-';
 
-export type QuizPhase = 'start' | 'asking' | 'listening' | 'feedback';
+export type QuizPhase = 'start' | 'name' | 'asking' | 'listening' | 'feedback';
 
 export interface Question {
   a: number;
@@ -15,4 +15,5 @@ export interface QuizState {
   correct: number;
   total: number;
   lastAnswerCorrect: boolean | null;
+  playerName: string;
 }
