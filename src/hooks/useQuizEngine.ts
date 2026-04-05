@@ -33,13 +33,19 @@ export function useQuizEngine() {
       const parsed = parseAnswer(rawText);
       const isCorrect = checkAnswer(parsed, prev.currentQuestion.correctAnswer);
       const name = prev.playerName;
+      const { a, b, operator, correctAnswer } = prev.currentQuestion;
+      const op = operator === '+' ? 'plus' : 'minus';
+      const equation = `${a} ${op} ${b} equals ${correctAnswer}`;
 
       if (isCorrect) {
-        speakText(name ? `Correct! Great job, ${name}!` : 'Correct! Great job!');
+        speakText(name
+          ? `Correct! ${equation}. Great job, ${name}!`
+          : `Correct! ${equation}. Great job!`
+        );
       } else {
         speakText(name
-          ? `Not quite, ${name}. The answer is ${prev.currentQuestion.correctAnswer}.`
-          : `Not quite. The answer is ${prev.currentQuestion.correctAnswer}.`
+          ? `Not quite, ${name}. ${a} ${op} ${b} equals ${correctAnswer}.`
+          : `Not quite. ${a} ${op} ${b} equals ${correctAnswer}.`
         );
       }
 

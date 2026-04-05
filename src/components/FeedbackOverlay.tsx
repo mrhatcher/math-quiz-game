@@ -15,11 +15,9 @@ export function FeedbackOverlay({ isCorrect, question, onNext }: FeedbackOverlay
         <h2 className="feedback-text">
           {isCorrect ? 'Correct!' : 'Not quite!'}
         </h2>
-        {!isCorrect && (
-          <p className="feedback-answer">
-            {question.a} {question.operator} {question.b} = {question.correctAnswer}
-          </p>
-        )}
+        <p className="feedback-answer">
+          {question.a} {question.operator} {question.b} = {question.correctAnswer}
+        </p>
         <button className="next-button" onClick={onNext}>
           Next Question
         </button>
